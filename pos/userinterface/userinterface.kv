@@ -1,0 +1,166 @@
+<FlatButton@ButtonBehavior+Label>:
+    font_size: 16
+
+<UserInterfaceWindow>
+    file_dropdown: file_dropdown.__self__
+    id: main_win
+    orientation: "vertical"
+    canvas.before:
+        Color:
+            rgba: (1,1,1,1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        id: header
+        size_hint_y: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (.06, .45, .45, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        FlatButton:
+            id: file_trigger
+            size_hint_x: .1
+            text: "File"
+            on_release: file_dropdown.open(self)
+            size_hint: (.1, None)
+            height: 30
+            Widget:
+                on_parent: file_dropdown.dismiss()
+                DropDown:
+                    id: file_dropdown
+                    Button:
+                        id: close
+                        text: "Log Out"
+                        size_hint_y: None
+                        height: 30
+                        on_release: root.log_out()
+        Label:
+            text: 'MrTra POS System'
+            size_hint_x: .8
+            bold: True
+            color: (1,1,1,1)
+        FlatButton:
+            id: loggedin_user
+            size_hint_x: .1
+            text: 'MrTra'
+    BoxLayout:
+        id: current
+        size_hint_y: None
+        height: 50
+        canvas.before:
+            Color:
+                rgba: (1,1,1,1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Button:
+            text: 'Current Item'
+            background_normal: ''
+            background_color: (.06, .32, .32, 1)
+            size_hint_x: .4
+        Button:
+            id: cur_product
+            text: 'Default Product'
+            background_normal: ''
+            background_color: (.06, .4, .4, 1)
+        Button:
+            id: cur_price
+            text: '0.00'
+            background_normal: ''
+            background_color: (.06, .65, .65, 1)
+            size_hint_x: .2
+    BoxLayout:
+        padding: 10
+        BoxLayout:
+            id: product_details
+            orientation: "vertical"
+            size_hint_x: .8
+            spacing: 10
+
+            BoxLayout:
+                id: product_labels
+                size_hint_y: None
+                height: 40
+                canvas.before:
+                    Color:
+                        rgba: (.06, .45, .45 , 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                FlatButton:
+                    text: "Product Code"
+                    size_hint_x: 1
+            BoxLayout:
+                id: product_inputs
+                size_hint_y: None
+                height: 30
+                spacing: 5
+                TextInput:
+                    id: code_inp
+                    hint_text: "Product Code"
+                    size_hint_x: 1
+                    multiline: False
+                    on_text_validate: root.update_purchases()
+            BoxLayout:
+                id: add_to_cart
+                orientation: "vertical"
+                BoxLayout:
+                    size_hint_y: None
+                    height: 30
+                    canvas.before:
+                        Color:
+                            rgba: (.06, .45, .45, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: "Code"
+                        size_hint_x: .25
+                    Label:
+                        text: "Product Name"
+                        size_hint_x: .3
+                    Label:
+                        text: "Qty"
+                        size_hint_x: .1
+                    Label:
+                        text: "Disc"
+                        size_hint_x: .1
+                    Label:
+                        text: "Price"
+                        size_hint_x: .1
+                    Label:
+                        text: "Total"
+                        size_hint_x: .15
+                GridLayout:
+                    id: products
+                    cols: 1
+        BoxLayout:
+            id: preview
+            orientation: "vertical"
+            size_hint_x: .2
+
+            TextInput:
+                id: receipt_preview
+                readonly: True
+                text: "MrTra Mart\nSt 42P\SenSok, PhnomPenh\n\nTel: (+855)92 605-441\nReceipt No: \nDate: \n\n"
+            Button:
+                size_hint_y: .1
+                text: "Check Out"
+                on_press: root.checkOut()
+    BoxLayout:
+        id: footer
+        size_hint_y: None
+        height: 30
+        canvas.before:
+            Color:
+                rgba:(.06 , .47, .47, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: 'maintained by MrTraPOS'
